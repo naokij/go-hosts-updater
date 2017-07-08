@@ -13,10 +13,11 @@ import (
 )
 
 const split = "##GO HOSTS##"
-const goHostsURL = "https://github.com/Lerist/Go-Hosts/raw/master/hosts"
+const goHostsURL = "https://raw.githubusercontent.com/racaljk/hosts/master/hosts"
 
 var etcHostsPath = hostsPath()
 var temp = tmpPath()
+var nl = newline()
 
 func getHosts() (f *os.File, err error) {
 	resp, err := http.Get(goHostsURL)
@@ -67,7 +68,7 @@ func main() {
 		if etcHostsScanner.Text() == split {
 			break
 		}
-		line := etcHostsScanner.Text() + "\n"
+		line := etcHostsScanner.Text() + nl
 		if _, err := tmpHostsWriter.WriteString(line); err != nil {
 			log.Println("Error while writing ", tmpHostsFile.Name(), " - ", err)
 			return
@@ -78,7 +79,7 @@ func main() {
 		return
 	}
 	t := time.Now()
-	splitLine := fmt.Sprintf("%s\n# Merged: %s\n", split, t.Format(time.RFC3339))
+	splitLine := fmt.Sprintf("%s%s# Merged: %s%s", split, nl, t.Format(time.RFC3339), nl)
 	if _, err := tmpHostsWriter.WriteString(splitLine); err != nil {
 		log.Println("Error while writing ", tmpHostsFile.Name(), " - ", err)
 		return

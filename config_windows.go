@@ -9,3 +9,7 @@ func hostsPath() string {
 func tmpPath() string {
 	return os.Getenv("temp")
 }
+
+func newline() string {
+	return "\r\n"
+}

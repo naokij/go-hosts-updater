@@ -9,3 +9,7 @@ func hostsPath() string {
 func tmpPath() string {
 	return "/tmp"
 }
+
+func newline() string {
+	return "\n"
+}
